@@ -1,0 +1,1069 @@
+
+
+\chapter{数学排版}
+\section{行内和行间公式}
+数学公式有两种排版方式：其一是与文字混排，称为\textbf{行内公式}；其二是单独列为一行排版，称为行间公式。 
+
+行内公式由一对 \texttt\$ 符号包裹：
+\begin{lstlisting}
+  $a^2 + b^2 = c^2$
+\end{lstlisting}
+\begin{center}
+  \fbox{
+    \parbox{10em}{
+      \centering $a^2 + b^2 = c^2$
+    }
+  }
+\end{center}
+单独成行的行间公式在 \LaTeX{} 里由 equation 环境包裹。equation 环境为公式自动生成一个编号，这个编号可以用 \verb|\label| 和 \verb|\ref| 生成交叉引用，
+amsmath 的 \verb|\eqref| 命令甚至为引用自动加上圆括号；还可以用 \verb|\tag| 命令手动修改公式的编号，或者用 \verb|\notag| 命令取消为公式编号。
+\begin{lstlisting}[caption=多行公式示例一]
+    The Pythagorean theorem is:
+    \begin{equation}
+      a^2 + b^2 = c^2 \label{pythagorean}
+    \end{equation}
+    Equation \eqref{pythagorean} is called `Gougu theorem' in Chinese.
+\end{lstlisting}
+\begin{center}
+  \fbox{
+    \parbox{30em}{
+      The Pythagorean theorem is:
+      \begin{equation}
+      a^2 + b^2 = c^2 \label{pythagorean}
+      \end{equation}
+      Equation \eqref{pythagorean} is
+      called `Gougu theorem' in Chinese.
+    }
+  }
+\end{center}
+\clearpage
+\begin{lstlisting}[caption=多行公式示例二]
+  It's wrong to say
+  \begin{equation}
+    1 + 1 = 3 \tag{dumb}
+  \end{equation}
+  or
+  \begin{equation}
+    1 + 1 = 4 \notag
+  \end{equation}
+\end{lstlisting}
+\begin{center}
+	\fbox{
+		\parbox{30em}{
+		    It's wrong to say
+			\begin{equation}
+			1 + 1 = 3 \tag{dumb}
+			\end{equation}
+			or
+			\begin{equation}
+			1 + 1 = 4 \notag
+			\end{equation}
+		}
+	}
+\end{center}
+
+如果需要直接使用不带编号的行间公式，则将公式用命令 \verb|\[| 和 \verb|\]| 包裹，与之等效的是 \verb|displaymath| 环境。有的人更喜欢 \verb|equation|$*$ 环境，体现了带星号和不带星号的环境之间的区别。
+
+\begin{lstlisting}[caption=多行公式示例三]
+  \begin{equation*}
+    a^2 + b^2 = c^2
+  \end{equation*}
+  For short:
+  \[ a^2 + b^2 = c^2 \]
+  Or if you like the long one:
+  \begin{displaymath}
+    a^2 + b^2 = c^2
+  \end{displaymath}
+\end{lstlisting}
+\clearpage
+\begin{center}
+	\fbox{
+		\parbox{30em}{
+			\begin{equation*}
+			a^2 + b^2 = c^2
+			\end{equation*}
+			For short:
+			\[ a^2 + b^2 = c^2 \]
+			Or if you like the long one:
+			\begin{displaymath}
+			a^2 + b^2 = c^2
+			\end{displaymath}
+		}
+	}
+\end{center}
+
+我们通过一个例子展示行内公式和行间公式的对比。为了与文字相适应，行内公式在排版大的公式元素（分式、巨算符等）时显得很“局促”：
+\begin{lstlisting}[caption=综合示例]
+  In text:
+  $\lim_{n \to \infty} \sum_{k=1}^n \frac{1}{k^2} = \frac{\pi^2}{6}$.
+  In display:
+  \[
+    \lim_{n \to \infty}
+    \sum_{k=1}^n \frac{1}{k^2}
+    = \frac{\pi^2}{6}
+  \]
+\end{lstlisting}
+\begin{center}
+	\fbox{
+		\parbox{30em}{
+			In text:
+			$\lim_{n \to \infty} \sum_{k=1}^n \frac{1}{k^2} = \frac{\pi^2}{6}$.
+			
+			In display:
+			\[
+			  \lim_{n \to \infty}
+			  \sum_{k=1}^n \frac{1}{k^2}
+			  = \frac{\pi^2}{6}
+			\]
+		}
+	}
+\end{center}
+\clearpage
+\section{数学模式}
+当用户使用 \$ 开启行内公式输入，或是使用 \verb|\[| 命令、equation 环境时，\LaTeX{} 就进入了数学模式。数学模式相比于文本模式有以下特点：
+\begin{enumerate}
+	\item 数学模式中输入的空格被忽略。数学符号的间距默认由符号的性质（关系符号、运算符等）决定。
+	需要人为引入间距时，使用 \verb|\quad| 和 \verb|\qquad| 等命令。
+	\item 不允许有空行（分段）。行间公式中也无法用 \verb|\\| 命令手动换行。排版多行公式需要用到其他公式环境。
+	\item 所有的字母被当作数学公式中的变量处理，字母间距与文本模式不一致，也无法生成单词之间的空格。
+\end{enumerate}
+\section{数学符号}
+\subsection{一般符号}
+\begin{table}[htp]
+	\centering
+	\caption{希腊字母} 
+	\begin{quote}\footnotesize%
+		\verb|\Alpha|，\verb|\Beta| 等希腊字母符号不存在，因为它们和拉丁字母 A,B 等一模一样；
+		小写字母里也不存在 \verb|\omicron|，直接用拉丁字母 $o$ 代替。
+	\end{quote}
+	\begin{symbols}{*4{cl}}
+		\hline
+		\SYM{\alpha}     & \SYM{\theta}     & \SYM{o}          & \SYM{\upsilon}  \\
+		\SYM{\beta}      & \SYM{\vartheta}  & \SYM{\pi}        & \SYM{\phi}      \\
+		\SYM{\gamma}     & \SYM{\iota}      & \SYM{\varpi}     & \SYM{\varphi}   \\
+		\SYM{\delta}     & \SYM{\kappa}     & \SYM{\rho}       & \SYM{\chi}      \\
+		\SYM{\epsilon}   & \SYM{\lambda}    & \SYM{\varrho}    & \SYM{\psi}      \\
+		\SYM{\varepsilon}& \SYM{\mu}        & \SYM{\sigma}     & \SYM{\omega}    \\
+		\SYM{\zeta}      & \SYM{\nu}        & \SYM{\varsigma}  &                 \\
+		\SYM{\eta}       & \SYM{\xi}        & \SYM{\tau}       &                 \\[1ex]
+		\SYM{\Gamma}     & \SYM{\Lambda}    & \SYM{\Sigma}     & \SYM{\Psi}      \\
+		\SYM{\Delta}     & \SYM{\Xi}        & \SYM{\Upsilon}   & \SYM{\Omega}    \\
+		\SYM{\Theta}     & \SYM{\Pi}        & \SYM{\Phi}       &                 \\[1ex]
+		\AMSM{\varGamma} & \AMSM{\varLambda}& \AMSM{\varSigma}  & \AMSM{\varPsi}      \\
+		\AMSM{\varDelta} & \AMSM{\varXi}    & \AMSM{\varUpsilon}& \AMSM{\varOmega}    \\
+		\AMSM{\varTheta} & \AMSM{\varPi}    & \AMSM{\varPhi}    &                 \\
+		\hline
+	\end{symbols}
+\end{table}
+\clearpage
+~\\
+\begin{table}[H]
+	\centering
+	\caption{其他符号}
+	\begin{symbols}{*4{cl}}
+		\hline
+		\SYM{\dots}       & \SYM{\cdots}      & \SYM{\vdots}      & \SYM{\ddots}     \\
+		\SYM{\hbar}       & \SYM{\imath}      & \SYM{\jmath}      & \SYM{\ell}       \\
+		\SYM{\Re}         & \SYM{\Im}         & \SYM{\aleph}      & \SYM{\wp}        \\
+		\SYM{\forall}     & \SYM{\exists}     & \LSYM{\mho}       & \SYM{\partial}   \\
+		\SYM{'}           & \SYM{\prime}      & \SYM{\emptyset}   & \SYM{\infty}     \\
+		\SYM{\nabla}      & \SYM{\triangle}   & \LSYM{\Box}       & \LSYM{\Diamond}  \\
+		\SYM{\bot}        & \SYM{\top}        & \SYM{\angle}      & \SYM{\surd}      \\
+		\SYM{\diamondsuit} & \SYM{\heartsuit} & \SYM{\clubsuit}   & \SYM{\spadesuit} \\
+		\SYM{\neg} or \verb|\lnot| & \SYM{\flat} & \SYM{\natural}    & \SYM{\sharp}     \\
+		\hline
+	\end{symbols}
+\end{table}
+
+\subsection{指数、上下标和导数}
+在\LaTeX{}中一般用 $\^$ 和 $\_$ 标明上下标，如果上下标不是一个字符需要使用花括号包裹，否则只对上下标符号后第一个字符起作用。
+
+导数符号 \texttt' (${}'$) 是一类特殊的上标，可以适当连用表示多阶导数，也可以在其后连用上标：
+\begin{lstlisting}
+  $f(x) = x^2 \quad f'(x) = 2x \quad f''^{2}(x) = 4$
+\end{lstlisting}
+\begin{center}
+	\fbox{
+		\parbox{20em}{
+			\centering $f(x) = x^2 \quad f'(x) = 2x \quad f''^{2}(x) = 4$
+		}
+	}
+\end{center}
+\subsection{分式和根式}
+分式使用 \verb|\frac|\{分子\}\{分母\} 来书写。分式的大小在行间公式中是正常大小，而在行内被极度压缩。
+\begin{center}
+	\fbox{
+		\parbox{20em}{
+			In display style:
+			\[
+			3/8 \qquad \frac{3}{8}
+			\qquad \tfrac{3}{8}
+			\]
+			In text style:
+			$1\frac{1}{2}$~hours \qquad
+			$1\dfrac{1}{2}$~hours
+		}
+	}
+\end{center}
+一般的根式使用 \verb|\sqrt{...}|；表示 $n$ 次方根时写成 \verb|\sqrt[n]{...}|.
+\begin{center}
+	\fbox{
+		\parbox{20em}{
+			\centering
+			$\sqrt{x} \Leftrightarrow x^{1/2}
+			\quad \sqrt[3]{2}
+			\quad \sqrt{x^{2} + \sqrt{y}}$
+		}
+	}
+\end{center}
+特殊的分式形式，如二项式结构，由 amsmath 宏包的 \verb|\binom| 命令生成：
+\begin{lstlisting}
+  Pascal's rule is
+  \[
+    \binom{n}{k} =\binom{n-1}{k} + \binom{n-1}{k-1}
+  \]
+\end{lstlisting}
+\begin{center}
+	\fbox{
+		\parbox{20em}{
+			Pascal's rule is
+			\[
+			\binom{n}{k} =\binom{n-1}{k} + \binom{n-1}{k-1}
+			\]
+		}
+	}
+\end{center}
+\subsection{关系符}
+\LaTeX{}常见的关系符号如下表所示，同时还提供了自定义二元关系符的命令 \verb|\stackrel|，用于将一个符号代价在原有的二元关系符之上：
+\begin{lstlisting}
+  \[
+    f_n(x) \stackrel{*}{\approx} 1
+  \]
+\end{lstlisting}
+\begin{center}
+	\fbox{
+		\parbox{20em}{
+			\centering
+			\[
+			  f_n(x) \stackrel{*}{\approx} 1
+			\]
+		}
+	}
+\end{center}
+\clearpage
+~\\
+\begin{table}[H]
+	\centering
+	\caption{二元关系符}
+	\begin{quote}\footnotesize%
+		所有的二元关系符都可以加 \verb|\not| 前缀得到相反意义的关系符，例如 \verb|\not=| 就得到不等号（同 \verb|\ne|）。
+	\end{quote}
+	\begin{symbols}{*3{cl}}
+		\hline
+		\SYM{<}              & \SYM{>}                    & \SYM{=}          \\
+		\SYM{\leq} or \verb|\le|   & \SYM{\geq} or \verb|\ge| & \SYM{\equiv}     \\
+		\SYM{\ll}            & \SYM{\gg}                  & \SYM{\doteq}     \\
+		\SYM{\prec}          & \SYM{\succ}                & \SYM{\sim}       \\
+		\SYM{\preceq}        & \SYM{\succeq}              & \SYM{\simeq}     \\
+		\SYM{\subset}        & \SYM{\supset}              & \SYM{\approx}    \\
+		\SYM{\subseteq}      & \SYM{\supseteq}            & \SYM{\cong}      \\
+		\LSYM{\sqsubset}     & \LSYM{\sqsupset}           & \LSYM{\Join}     \\
+		\SYM{\sqsubseteq}    & \SYM{\sqsupseteq}          & \SYM{\bowtie}    \\
+		\SYM{\in}            & \SYM{\ni}, \verb|\owns|      & \SYM{\propto}    \\
+		\SYM{\vdash}         & \SYM{\dashv}               & \SYM{\models}    \\
+		\SYM{\mid}           & \SYM{\parallel}            & \SYM{\perp}      \\
+		\SYM{\smile}         & \SYM{\frown}               & \SYM{\asymp}     \\
+		\SYM{:}              & \SYM{\notin}               & \SYM{\neq} or \verb|\ne| \\
+		\hline
+	\end{symbols}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{\AmS{} 二元关系符} 
+	\begin{symbols}{*3{cl}}
+		\hline
+		\AMSSYM{\lessdot}           & \AMSSYM{\gtrdot}            & \AMSSYM{\doteqdot} \\
+		\AMSSYM{\leqslant}          & \AMSSYM{\geqslant}          & \AMSSYM{\risingdotseq}     \\
+		\AMSSYM{\eqslantless}       & \AMSSYM{\eqslantgtr}        & \AMSSYM{\fallingdotseq}    \\
+		\AMSSYM{\leqq}              & \AMSSYM{\geqq}              & \AMSSYM{\eqcirc}           \\
+		\AMSSYM{\lll} or \verb|\llless| & \AMSSYM{\ggg}               & \AMSSYM{\circeq}  \\
+		\AMSSYM{\lesssim}           & \AMSSYM{\gtrsim}            & \AMSSYM{\triangleq}        \\
+		\AMSSYM{\lessapprox}        & \AMSSYM{\gtrapprox}         & \AMSSYM{\bumpeq}           \\
+		\AMSSYM{\lessgtr}           & \AMSSYM{\gtrless}           & \AMSSYM{\Bumpeq}           \\
+		\AMSSYM{\lesseqgtr}         & \AMSSYM{\gtreqless}         & \AMSSYM{\thicksim}         \\
+		\AMSSYM{\lesseqqgtr}        & \AMSSYM{\gtreqqless}        & \AMSSYM{\thickapprox}      \\
+		\AMSSYM{\preccurlyeq}       & \AMSSYM{\succcurlyeq}       & \AMSSYM{\approxeq}         \\
+		\AMSSYM{\curlyeqprec}       & \AMSSYM{\curlyeqsucc}       & \AMSSYM{\backsim}          \\
+		\AMSSYM{\precsim}           & \AMSSYM{\succsim}           & \AMSSYM{\backsimeq}        \\
+		\AMSSYM{\precapprox}        & \AMSSYM{\succapprox}        & \AMSSYM{\vDash}            \\
+		\AMSSYM{\subseteqq}         & \AMSSYM{\supseteqq}         & \AMSSYM{\Vdash}            \\
+		\AMSSYM{\shortparallel}     & \AMSSYM{\Supset}            & \AMSSYM{\Vvdash}           \\
+		\AMSSYM{\blacktriangleleft} & \AMSSYM{\sqsupset}          & \AMSSYM{\backepsilon}      \\
+		\AMSSYM{\vartriangleright}  & \AMSSYM{\because}           & \AMSSYM{\varpropto}        \\
+		\AMSSYM{\blacktriangleright}& \AMSSYM{\Subset}            & \AMSSYM{\between}          \\
+		\AMSSYM{\trianglerighteq}   & \AMSSYM{\smallfrown}        & \AMSSYM{\pitchfork}        \\
+		\AMSSYM{\vartriangleleft}   & \AMSSYM{\shortmid}          & \AMSSYM{\smallsmile}       \\
+		\AMSSYM{\trianglelefteq}    & \AMSSYM{\therefore}         & \AMSSYM{\sqsubset}         \\
+		\hline
+	\end{symbols}
+\end{table}
+\subsection{算符}
+\begin{table}[htp]
+	\centering
+	\caption{二元运算符}
+	\begin{symbols}{*3{cl}}
+		\hline
+		\SYM{+}              & \SYM{-}              &                     \\
+		\SYM{\pm}            & \SYM{\mp}            & \SYM{\triangleleft} \\
+		\SYM{\cdot}          & \SYM{\div}           & \SYM{\triangleright}\\
+		\SYM{\times}         & \SYM{\setminus}      & \SYM{\star}         \\
+		\SYM{\cup}           & \SYM{\cap}           & \SYM{\ast}          \\
+		\SYM{\sqcup}         & \SYM{\sqcap}         & \SYM{\circ}         \\
+		\SYM{\vee}, \verb|\lor| & \SYM{\wedge},\verb|\land|  & \SYM{\bullet}   \\
+		\SYM{\oplus}         & \SYM{\ominus}        & \SYM{\diamond}      \\
+		\SYM{\odot}          & \SYM{\oslash}        & \SYM{\uplus}        \\
+		\SYM{\otimes}        & \SYM{\bigcirc}       & \SYM{\amalg}        \\
+		\SYM{\bigtriangleup} &\SYM{\bigtriangledown}& \SYM{\dagger}       \\
+		\LSYM{\lhd}          & \LSYM{\rhd}          & \SYM{\ddagger}      \\
+		\LSYM{\unlhd}        & \LSYM{\unrhd}        & \SYM{\wr}           \\
+		\hline
+	\end{symbols}
+\end{table}
+\begin{table}[htp]
+	\centering
+	\caption{\hologo{AmS} 二元运算符} 
+	\begin{symbols}{*3{cl}}
+		\hline
+		\AMSSYM{\dotplus}        & \AMSSYM{\centerdot}      &       \\
+		\AMSSYM{\ltimes}         & \AMSSYM{\rtimes}         & \AMSSYM{\divideontimes} \\
+		\AMSSYM{\doublecup}      & \AMSSYM{\doublecap}      & \AMSSYM{\smallsetminus} \\
+		\AMSSYM{\veebar}         & \AMSSYM{\barwedge}       & \AMSSYM{\doublebarwedge}\\
+		\AMSSYM{\boxplus}        & \AMSSYM{\boxminus}       & \AMSSYM{\circleddash}   \\
+		\AMSSYM{\boxtimes}       & \AMSSYM{\boxdot}         & \AMSSYM{\circledcirc}   \\
+		\AMSSYM{\intercal}       & \AMSSYM{\circledast}     & \AMSSYM{\rightthreetimes} \\
+		\AMSSYM{\curlyvee}       & \AMSSYM{\curlywedge}     & \AMSSYM{\leftthreetimes} \\
+		\hline
+	\end{symbols}
+\end{table}
+$\nabla$(\verb|\nabla|) 和 $\partial$(\verb|\partial|) 也是常用的算符，虽然它们不属于二元算符。
+\LaTeX{} 将数学函数的名称作为一个算符排版，字体为直立字体。
+\vspace{2em}
+\begin{table}[htp]
+	\centering
+	\caption{\LaTeX{} 作为算符的函数名称一览}
+	\begin{tabular}{*{5}{p{5em}}}
+		\hline
+		\multicolumn{5}{c}{\textbf{不带上下限的算符}} \\
+		\hline
+		\verb|\sin| & \verb|\arcsin| & \verb|\sinh| & \verb|\exp| & \verb|\dim| \\
+		\verb|\cos| & \verb|\arccos| & \verb|\cosh| & \verb|\log| & \verb|\ker| \\
+		\verb|\tan| & \verb|\arctan| & \verb|\tanh| & \verb|\lg|  & \verb|\hom| \\
+		\verb|\cot| & \verb|\arg|    & \verb|\coth| & \verb|\ln|  & \verb|\deg| \\
+		\verb|\sec| & \verb|\csc|    & \\
+		\hline
+		\multicolumn{5}{c}{\textbf{带上下限的算符}} \\
+		\hline
+		\verb|\lim| & \verb|\limsup| & \verb|\liminf| & \verb|\sup| & \verb|\inf| \\
+		\verb|\min| & \verb|\max|    & \verb|\det|    & \verb|\Pr|  & \verb|\gcd| \\
+		\hline
+	\end{tabular}
+\end{table}
+\clearpage
+\begin{lstlisting}
+  \[
+    \lim_{x \rightarrow 0}
+    \frac{\sin x}{x}=1
+  \]
+\end{lstlisting}
+\begin{center}
+	\fbox{
+		\parbox{20em}{
+			\centering
+		    \[
+			  \lim_{x \rightarrow 0}
+			  \frac{\sin x}{x}=1
+			\]
+		}
+	}
+\end{center}
+对于求模表达式，\LaTeX{} 提供了 \verb|\bmod| 和 \verb|\pmod| 命令，前者相当于一个二元运算符，后者作为同余表达式的后缀：
+\begin{lstlisting}
+  $a\bmod b \\
+  x\equiv a \pmod{b}$
+\end{lstlisting}
+\begin{center}
+	\fbox{
+		\parbox{20em}{
+		  $a\bmod b \\
+		  x\equiv a \pmod{b}$
+		}
+	}
+\end{center}
+amsmath 还允许用户在导言区用 \verb|\DeclareMathOperator|定义自己的算符，其中带星号的命令定义带上下限的算符：
+\begin{verbatim}
+\DeclareMathOperator{\argh}{argh}
+\DeclareMathOperator*{\nut}{Nut}
+\end{verbatim}
+\begin{lstlisting}
+  \[\argh 3 = \nut_{x=1} 4x\]
+\end{lstlisting}
+\begin{center}
+	\fbox{
+		\parbox{20em}{
+			\[\argh 3 = \nut_{x=1} 4x\]
+		}
+	}
+\end{center}
+\subsection{巨算符}
+积分号 $\int$(\verb|\int|)、求和号 $\sum$ (\verb|\sum|) 等符号称为\textbf{巨算符}。巨算符在行内公式和行间公式的大小和形状有区别。
+\begin{lstlisting}
+  In text:
+  $\sum_{i=1}^n \quad
+  \int_0^{\frac{\pi}{2}} \quad
+  \oint_0^{\frac{\pi}{2}} \quad
+  \prod_\epsilon $ \\
+  In display:
+  \[\sum_{i=1}^n \quad
+  \int_0^{\frac{\pi}{2}} \quad
+  \oint_0^{\frac{\pi}{2}} \quad
+  \prod_\epsilon \]
+\end{lstlisting}
+\begin{center}
+	\fbox{
+		\parbox{20em}{
+			In text:
+			$\sum_{i=1}^n \quad
+			\int_0^{\frac{\pi}{2}} \quad
+			\oint_0^{\frac{\pi}{2}} \quad
+			\prod_\epsilon $ \\
+			In display:
+			\[\sum_{i=1}^n \quad
+			\int_0^{\frac{\pi}{2}} \quad
+			\oint_0^{\frac{\pi}{2}} \quad
+			\prod_\epsilon \]
+		}
+	}
+\end{center}
+巨算符的上下标位置可由 \verb|\limits| 和 \verb|\nolimits| 调整，前者令巨算符类似 $\lim$ 或求和算符 $\sum$，上下标位于上下方；后者令巨算符类似积分号，上下标位于右上方和右下方。
+
+\begin{lstlisting}
+  In text:
+  $\sum\limits_{i=1}^n \quad
+  \int\limits_0^{\frac{\pi}{2}} \quad
+  \prod\limits_\epsilon $ \\
+  In display:
+  \[\sum\nolimits_{i=1}^n \quad
+  \int\limits_0^{\frac{\pi}{2}} \quad
+  \prod\nolimits_\epsilon \]
+\end{lstlisting}
+\begin{center}
+	\fbox{
+		\parbox{20em}{
+			In text:
+			$\sum\limits_{i=1}^n \quad
+			\int\limits_0^{\frac{\pi}{2}} \quad
+			\prod\limits_\epsilon $ \\
+			In display:
+			\[\sum\nolimits_{i=1}^n \quad
+			\int\limits_0^{\frac{\pi}{2}} \quad
+			\prod\nolimits_\epsilon \]
+		}
+	}
+\end{center}
+amsmath 宏包还提供了 \verb|\substack|，能够在下限位置书写多行表达式；subarray
+环境更进一步，令多行表达式可选择居中 (c) 或左对齐 (l)：
+\begin{lstlisting}
+  \[
+  \sum_{\substack{0\le i\le n \\
+  j\in \mathbb{R}}}
+  P(i,j) = Q(n)
+  \]
+  \[
+  \sum_{\begin{subarray}{l}
+  0\le i\le n \\
+  j\in \mathbb{R}
+  \end{subarray}}
+  P(i,j) = Q(n)
+  \]
+\end{lstlisting}
+\begin{center}
+	\fbox{
+		\parbox{20em}{
+			\[
+			\sum_{\substack{0\le i\le n \\
+					j\in \mathbb{R}}}
+			P(i,j) = Q(n)
+			\]
+			\[
+			\sum_{\begin{subarray}{l}
+				0\le i\le n \\
+				j\in \mathbb{R}
+				\end{subarray}}
+			P(i,j) = Q(n)
+			\]
+		}
+	}
+\end{center}
+\clearpage
+~\\
+\begin{table}[H]
+	\centering
+	\caption{巨算符}
+	\def\arraystretch{2.2}
+	\begin{symbols}{*3{ccl}}
+		\hline
+		\BIGSYM{\sum}      & \BIGSYM{\bigcup}   & \BIGSYM{\bigvee}  \\
+		\BIGSYM{\prod}     & \BIGSYM{\bigcap}   & \BIGSYM{\bigwedge} \\
+		\BIGSYM{\coprod}   & \BIGSYM{\bigsqcup} & \BIGSYM{\biguplus} \\
+		\BIGSYM{\int}      & \BIGSYM{\oint}     & \BIGSYM{\bigodot} \\
+		\BIGSYM{\bigoplus} & \BIGSYM{\bigotimes} & \\
+		\AMSBIG{\iint}     & \AMSBIG{\iiint}    & \AMSBIG{\iiiint}  \\
+		\AMSBIG{\idotsint} &                    & \\
+		\hline
+	\end{symbols}
+\end{table}
+\subsection{数学重音和上下括号}
+\begin{table}[htp]
+	\centering
+	\caption{数学重音符号}
+	\begin{quote}\footnotesize%
+		最后一个 \verb|\wideparen| 依赖 yhmath 宏包。
+	\end{quote}
+	\begin{symbols}{*3{cl}}
+		\hline
+		\ACC{\hat}{a}   & \ACC{\check}{a} & \ACC{\tilde}{a}       \\
+		\ACC{\acute}{a} & \ACC{\grave}{a} & \ACC{\breve}{a}       \\
+		\ACC{\bar}{a}   & \ACC{\vec}{a}   & \ACC{\mathring}{a}    \\
+		\ACC{\dot}{a}   & \ACC{\ddot}{a}  & \AMSACC{\dddot}{a}    \\
+		\AMSACC{\ddddot}{a} \\[1ex]
+		\ACC{\widehat}{AAA} & \ACC{\widetilde}{AAA} & \ACC{\wideparen}{AAA} \\
+		\hline
+	\end{symbols}
+\end{table}
+
+\begin{table}[htp]
+	\centering
+	\caption{作为重音的箭头符号} 
+	\begin{symbols}{*2{cl}}
+		\hline
+		\ACC{\overrightarrow}{AB}     & \AMSACC{\underrightarrow}{AB}     \\
+		\ACC{\overleftarrow}{AB}      & \AMSACC{\underleftarrow}{AB}      \\
+		\AMSACC{\overleftrightarrow}{AB} & \AMSACC{\underleftrightarrow}{AB} \\
+		\hline
+	\end{symbols}
+\end{table}
+
+\cmd{overbrace} 和 \cmd{underbrace} 命令用来生成上/下括号，各自可带一个上/下标公式。
+\begin{lstlisting}
+  $\underbrace{\overbrace{(a+b+c)}^6
+  \cdot \overbrace{(d+e+f)}^7}
+  _\text{meaning of life} = 42$
+\end{lstlisting}
+
+\begin{center}
+	\fbox{
+		\parbox{20em}{
+			\centering
+			$\underbrace{\overbrace{(a+b+c)}^6
+				\cdot \overbrace{(d+e+f)}^7}
+			_\text{meaning of life} = 42$
+		}
+	}
+\end{center}
+
+\subsection{箭头}
+常用的箭头包括 \cmd{rightarrow} ($\rightarrow$，或 \cmd{to})、\cmd{leftarrow}（$\leftarrow$，或 \cmd{gets}）等。
+\begin{table}[H]
+	\centering
+	\caption{箭头}
+	\begin{symbols}{*2{cl}}
+		\hline
+		\SYM{\leftarrow} or \cmd{gets} & \SYM{\longleftarrow} \\
+		\SYM{\rightarrow} or \cmd{to}   & \SYM{\longrightarrow} \\
+		\SYM{\leftrightarrow}    & \SYM{\longleftrightarrow} \\
+		\SYM{\Leftarrow}         & \SYM{\Longleftarrow}     \\
+		\SYM{\Rightarrow}        & \SYM{\Longrightarrow}    \\
+		\SYM{\Leftrightarrow}    & \SYM{\Longleftrightarrow}\\
+		\SYM{\mapsto}            & \SYM{\longmapsto}        \\
+		\SYM{\hookleftarrow}     & \SYM{\hookrightarrow}    \\
+		\SYM{\leftharpoonup}     & \SYM{\rightharpoonup}    \\
+		\SYM{\leftharpoondown}   & \SYM{\rightharpoondown}  \\
+		\SYM{\rightleftharpoons} & \SYM{\iff}               \\
+		\SYM{\uparrow}           & \SYM{\downarrow} \\
+		\SYM{\updownarrow}       & \SYM{\Uparrow} \\
+		\SYM{\Downarrow}         & \SYM{\Updownarrow} \\
+		\SYM{\nearrow}           & \SYM{\searrow} \\
+		\SYM{\swarrow}           & \SYM{\nwarrow} \\
+		\LSYM{\leadsto}          &              \\
+		\hline
+	\end{symbols}
+\end{table}
+amsmath 的 \cmd{xleft\-arrow} 和 \cmd{xright\-arrow} 命令提供了长度可以伸展的箭头，并且可以为箭头增加上下标：
+\begin{lstlisting}
+  \[ a\xleftarrow{x+y+z} b \]
+  \[ c\xrightarrow[x<y]{a*b*c}d \]
+\end{lstlisting}
+\begin{center}
+	\fbox{
+		\parbox{20em}{
+			 \[ a\xleftarrow{x+y+z} b \]
+			\[ c\xrightarrow[x<y]{a*b*c}d \]
+		}
+	}
+\end{center}
+
+\subsection{括号和定界符}
+
+\begin{table}[htp]
+	\centering
+	\caption{定界符}
+	\begin{quote}\footnotesize%
+		amsmath 还定义了 \cmd{lvert}、\cmd{rvert} 和 \cmd{lVert}、\cmd{rVert}，
+		分别作为 \cmd{vert} 和 \cmd{Vert} 对应的开符号（左侧）和闭符号（右侧）的命令。
+	\end{quote}
+	\begin{symbols}{*4{cl}}
+		\hline
+		\SYM{(}                  & \SYM{)}                  & \SYM{\uparrow}     & \SYM{\downarrow}   \\
+		\SYM{[}  or \cmd{lbrack} & \SYM{]}  or \cmd{rbrack} & \SYM{\Uparrow}     & \SYM{\Downarrow}   \\
+		\SYM{\{} or \cmd{lbrace} & \SYM{\}} or \cmd{rbrace} & \SYM{\updownarrow} & \SYM{\Updownarrow} \\
+		\SYM{|}  or \cmd{vert}   & \SYM{\|} or \cmd{Vert}   & \SYM{\lceil}       & \SYM{\rceil}       \\
+		\SYM{\langle}            & \SYM{\rangle}            & \SYM{\lfloor}      & \SYM{\rfloor}      \\
+		\SYM{/}                  & \SYM{\backslash} \\
+		\hline
+	\end{symbols}
+\end{table}
+
+\begin{table}[htp]
+	\centering
+	\caption{用于行间公式的大定界符}
+	\def\arraystretch{1.8}
+	\begin{symbols}{*3{cl}}
+		\hline
+		\DEL{\lgroup}      & \DEL{\rgroup}      & \DEL{\lmoustache}  \\
+		\DEL{\arrowvert}   & \DEL{\Arrowvert}   & \DEL{\bracevert} \\
+		\DEL{\rmoustache} \\
+		\hline
+	\end{symbols}
+\end{table}
+
+使用 \cmd{left} 和 \cmd{right} 命令可令括号（定界符）的大小可变，在行间公式中常用。\LaTeX{} 会自动根据括号内的公式大小决定定界符大小。
+\cmd{left} 和 \cmd{right} 必须成对使用。需要使用单个定界符时，另一个定界符写成 \cmd{left.} 或 \cmd{right.}。
+
+\begin{lstlisting}
+  \[1 + \left(\frac{1}{1-x^{2}}
+  \right)^3 \qquad
+  \left.\frac{\partial f}{\partial t}
+  \right|_{t=0}\]
+\end{lstlisting}
+
+\begin{center}
+	\fbox{
+		\parbox{20em}{
+			\[1 + \left(\frac{1}{1-x^{2}}
+			\right)^3 \qquad
+			\left.\frac{\partial f}{\partial t}
+			\right|_{t=0}\] 
+		}
+	}
+\end{center}
+有时我们不满意于 \LaTeX{} 为我们自动调节的定界符大小。这时我们还可以用 \cmd{big}、\cmd{bigg} 等命令生成固定大小的定界符。
+更常用的形式是类似 \cmd{left} 的 \cmd{bigl}、\cmd{biggl} 等，以及类似 \cmd{right} 的 \cmd{bigr}、\cmd{biggr} 等
+（\cmd{bigl} 和 \cmd{bigr} 不必成对出现）。
+\begin{lstlisting}
+  $\Bigl((x+1)(x-1)\Bigr)^{2}$\\
+  $\bigl( \Bigl( \biggl( \Biggl( \quad
+  \bigr\} \Bigr\} \biggr\} \Biggr\} \quad
+  \big\| \Big\| \bigg\| \Bigg\| \quad
+  \big\Downarrow \Big\Downarrow
+  \bigg\Downarrow \Bigg\Downarrow$
+\end{lstlisting}
+\begin{center}
+	\fbox{
+		\parbox{20em}{
+			$\Bigl((x+1)(x-1)\Bigr)^{2}$\\
+			$\bigl( \Bigl( \biggl( \Biggl( \quad
+			\bigr\} \Bigr\} \biggr\} \Biggr\} \quad
+			\big\| \Big\| \bigg\| \Bigg\| \quad
+			\big\Downarrow \Big\Downarrow
+			\bigg\Downarrow \Bigg\Downarrow$
+		}
+	}
+\end{center}
+
+\section{多行公式}
+\subsection{长公式折行}
+通常来讲应当避免写出超过一行而需要折行的长公式。如果一定要折行的话，习惯上优先在等号之前折行，其次在加号、减号之前，再次在乘号、除号之前。
+其它位置应当避免折行。
+
+amsmath 宏包的 multline 环境提供了书写折行长公式的方便环境。
+它允许用 \crcmd{} 折行，将公式编号放在最后一行。
+多行公式的首行左对齐，末行右对齐，其余行居中。
+\begin{lstlisting}
+  \begin{multline}
+    a + b + c + d + e + f
+    + g + h + i \\
+    = j + k + l + m + n\\
+    = o + p + q + r + s\\
+    = t + u + v + x + z
+  \end{multline}
+\end{lstlisting}
+\begin{center}
+	\fbox{
+		\parbox{20em}{
+			\begin{multline}
+			a + b + c + d + e + f
+			+ g + h + i \\
+			= j + k + l + m + n\\
+			= o + p + q + r + s\\
+			= t + u + v + x + z 
+			\end{multline}
+		}
+	}
+\end{center}
+
+\subsection{多行公式}
+更多的情况是，我们需要罗列一系列公式，并令其按照等号对齐。目前最常用的是 align 环境，它将公式用 \texttt\& 隔为两部分并对齐。分隔符通常放在等号左边：
+\begin{lstlisting}
+  \begin{align}
+    a & = b + c \\
+      & = d + e
+  \end{align}
+\end{lstlisting}
+\begin{center}
+	\fbox{
+		\parbox{20em}{
+			\begin{align}
+			a & = b + c \\
+			& = d + e
+			\end{align}
+		}
+	}
+\end{center}
+align 环境会给每行公式都编号。我们仍然可以用 \cmd{notag} 去掉某行的编号。
+在以下的例子，为了对齐等号，我们将分隔符放在右侧，并且此时需要在等号后添加一对括号 \texttt\{\texttt\} 以产生正常的间距：
+\begin{lstlisting}
+  \begin{align}
+  a ={} & b + c \\
+  ={} & d + e + f + g + h + i
+  + j + k + l \notag \\
+  & + m + n + o \\
+  ={} & p + q + r + s
+  \end{align}
+\end{lstlisting}
+\begin{center}
+	\fbox{
+		\parbox{20em}{
+			\begin{align}
+			a ={} & b + c \\
+			={} & d + e + f + g + h + i
+			+ j + k + l \notag \\
+			& + m + n + o \\
+			={} & p + q + r + s
+			\end{align}
+		}
+	}
+\end{center}
+align 还能够对齐多组公式，除等号前的 \texttt\& 之外，公式之间也用 \texttt\& 分隔：
+\begin{lstlisting}
+  \begin{align}
+  a &=1  &  b &=2   & c &=3   \\
+  d &=-1 &  e &=-2  & f &=-5
+  \end{align}
+\end{lstlisting}
+\begin{center}
+	\fbox{
+		\parbox{20em}{
+			\begin{align}
+			a &=1  &  b &=2   & c &=3   \\
+			d &=-1 &  e &=-2  & f &=-5
+			\end{align}
+		}
+	}
+\end{center}
+如果我们不需要按等号对齐，只需罗列数个公式，gather 将是一个很好用的环境：
+\begin{lstlisting}
+\begin{gather}
+a = b + c \\
+d = e + f + g \\
+h + i = j + k \notag \\
+l + m = n
+\end{gather}
+\end{lstlisting}
+\begin{center}
+	\fbox{
+		\parbox{20em}{
+			\begin{gather}
+			a = b + c \\
+			d = e + f + g \\
+			h + i = j + k \notag \\
+			l + m = n
+			\end{gather}
+		}
+	}
+\end{center}
+\subsection{公用编号的多行公式}
+另一个常见的需求是将多个公式组在一起公用一个编号，编号位于公式的居中位置。为此，amsmath 宏包
+提供了诸如 aligned、gathered 等环境，与 equation 环境套用。
+以 \texttt{-ed} 结尾的环境用法与前一节不以 \texttt{-ed} 结尾的环境用法一一对应。我们仅以 aligned 举例：
+\begin{lstlisting}
+  \begin{equation}
+	  \begin{aligned}
+		  a &= b + c \\
+		  d &= e + f + g \\
+		  h + i &= j + k \\
+		  l + m &= n
+	  \end{aligned}
+  \end{equation}
+\end{lstlisting}
+\begin{center}
+	\fbox{
+		\parbox{20em}{
+			\begin{equation}
+				\begin{aligned}
+					a &= b + c \\
+					d &= e + f + g \\
+					h + i &= j + k \\
+					l + m &= n
+				\end{aligned}
+			\end{equation}
+		}
+	}
+\end{center}
+\section{数组和矩阵}
+为了排版二维数组，\LaTeX{} 提供了 \env{array} 环境，用法与 \env{tabular} 环境极为类似，也需要定义列格式，并用 \crcmd{} 换行。
+数组可作为一个公式块，在外套用 \cmd{left}、\cmd{right} 等定界符：
+
+\begin{lstlisting}
+  \[ \mathbf{X} = \left(
+    \begin{array}{cccc}
+    x_{11} & x_{12} & \ldots & x_{1n}\\
+    x_{21} & x_{22} & \ldots & x_{2n}\\
+    \vdots & \vdots & \ddots & \vdots\\
+    x_{n1} & x_{n2} & \ldots & x_{nn}\\
+    \end{array} 
+  \right) \]
+\end{lstlisting}
+\begin{center}
+	\fbox{
+		\parbox{25em}{
+			\[ \mathbf{X} = \left(
+			\begin{array}{cccc}
+			x_{11} & x_{12} & \ldots & x_{1n}\\
+			x_{21} & x_{22} & \ldots & x_{2n}\\
+			\vdots & \vdots & \ddots & \vdots\\
+			x_{n1} & x_{n2} & \ldots & x_{nn}\\
+			\end{array} 
+			\right) \]
+		}
+	}
+\end{center}
+我们还可以利用空的定界符排版出这样的效果：
+\begin{lstlisting}
+  \[ |x| = \left\{
+    \begin{array}{rl}
+      -x & \text{if } x < 0,\\
+      0 & \text{if } x = 0,\\
+      x & \text{if } x > 0.
+    \end{array} \right. 
+  \]
+\end{lstlisting}
+\begin{center}
+	\fbox{
+		\parbox{25em}{
+			\[ |x| = \left\{
+			\begin{array}{rl}
+			-x & \text{if } x < 0,\\
+			0 & \text{if } x = 0,\\
+			x & \text{if } x > 0.
+			\end{array} \right. 
+			\]
+		}
+	}
+\end{center}
+不过上述例子可以用 amsmath 提供的 \env{cases} 环境更轻松地完成：
+\begin{lstlisting}
+  \[ |x| =
+    \begin{cases}
+      -x & \text{if } x < 0,\\
+      0 & \text{if } x = 0,\\
+      x & \text{if } x > 0.
+    \end{cases} 
+  \]
+\end{lstlisting}
+\begin{center}
+	\fbox{
+		\parbox{25em}{
+			  \[ |x| =
+			\begin{cases}
+			-x & \text{if } x < 0,\\
+			0 & \text{if } x = 0,\\
+			x & \text{if } x > 0.
+			\end{cases} 
+			\]
+		}
+	}
+\end{center}
+我们当然也可以用 \env{array} 环境排版各种矩阵。amsmath 宏包还直接提供了多种排版矩阵的环境，包括不带定界符的 \env{matrix}，
+以及带各种定界符的矩阵 \env{pmatrix}（$\bigl($）、\env{bmatrix}（$\bigl[$）、\env{Bmatrix}（$\bigl\{$）、
+\env{vmatrix}（$\bigl\vert$）、\env{Vmatrix}（$\bigl\Vert$）。使用这些环境时，无需给定列格式：
+\begin{lstlisting}
+  \[
+  \begin{matrix}
+  1 & 2 \\ 3 & 4
+  \end{matrix} \qquad
+  \begin{bmatrix}
+  x_{11} & x_{12} & \ldots & x_{1n}\\
+  x_{21} & x_{22} & \ldots & x_{2n}\\
+  \vdots & \vdots & \ddots & \vdots\\
+  x_{n1} & x_{n2} & \ldots & x_{nn}\\
+  \end{bmatrix}
+  \]
+\end{lstlisting}
+\begin{center}
+	\fbox{
+		\parbox{25em}{
+			  \[
+			\begin{matrix}
+			1 & 2 \\ 3 & 4
+			\end{matrix} \qquad
+			\begin{bmatrix}
+			x_{11} & x_{12} & \ldots & x_{1n}\\
+			x_{21} & x_{22} & \ldots & x_{2n}\\
+			\vdots & \vdots & \ddots & \vdots\\
+			x_{n1} & x_{n2} & \ldots & x_{nn}\\
+			\end{bmatrix}
+			\]
+		}
+	}
+\end{center}
+\section{公式中的间距}
+绝大部分时候，数学公式中各元素的间距是根据符号类型自动生成的，需要我们手动调整的情况极少。
+我们已经认识了两个生成间距的命令 \cmd{quad} 和 \cmd{qquad}。在公式中我们还可能用到的间距包括 \cmd{,}、\cmd{:}、\cmd{;}
+以及负间距 \cmd{!}，其中 \cmd{quad} 、 \cmd{qquad} 和 \cmd{,} 在文本和数学环境中可用，后三个命令只用于数学环境。
+文本中的 \cmd{\textvisiblespace} 也能使用在数学公式中。
+
+\newdimen\testdimen \testdimen=\fontdimen6\textfont2 \divide\testdimen18\relax
+\begin{center}
+	\begin{tabularx}{0.9\textwidth}{*{3}{>{\raggedright\arraybackslash}X}|*{3}{>{\raggedright\arraybackslash}X}}
+		\hline
+		无额外间距  &                          & $a a$        &
+		\cmd{,}     & \demowidth{3\testdimen}  & $a\,a$       \\
+		\cmd{quad}  & \demowidth{18\testdimen} & $a\quad a$   &
+		\cmd{:}     & \demowidth{4\testdimen}  & $a\:a$       \\
+		\cmd{qquad} & \demowidth{36\testdimen} & $a\qquad a$  &
+		\cmd{;}     & \demowidth{5\testdimen}  & $a\;a$       \\
+		\cmd{\textvisiblespace}     & \demowidth{\fontdimen2\textfont0} & $a\ a$ &
+		\cmd{!}     & $-$\demowidth{3\testdimen} & $a\!a$     \\
+		\hline
+	\end{tabularx}
+\end{center}
+一个常见的用途是修正积分的被积函数$f(x)$和微元$\mathrm{d}x$之间的距离。注意微元里的$\mathrm{d}$用的是直立体：
+\begin{lstlisting}
+  \[
+  \int_a^b f(x)\mathrm{d}x
+  \qquad
+  \int_a^b f(x)\,\mathrm{d}x
+  \]
+\end{lstlisting}
+\begin{center}
+	\fbox{
+		\parbox{20em}{
+			  \[
+			\int_a^b f(x)\mathrm{d}x
+			\qquad
+			\int_a^b f(x)\,\mathrm{d}x
+			\]
+		}
+	}
+\end{center}
+
+\section{数学符号的字体控制}
+\subsection{数学字母字体}
+\LaTeX{} 允许一部分数学符号切换字体，主要是拉丁字母、数字、大写希腊字母以及重音符号等。
+表 \ref{tbl:math-fonts} 给出了切换字体的命令。某一些命令需要字体宏包的支持。
+\begin{table}[htp]
+	\centering
+	\caption{数学字母字体} \label{tbl:math-fonts}
+	\begin{tabular}{*{3}{l}}
+		\hline
+		\textbf{示例}    & \textbf{命令} & \textbf{依赖的宏包}\\
+		\hline
+		$\mathnormal{ABCDE abcde 1234}$  & \cmd{mathnormal}\marg*{\ldots}&       \\
+		$\mathrm{ABCDE abcde 1234}$      & \cmd{mathrm}\marg*{\ldots}    &       \\
+		$\mathit{ABCDE abcde 1234}$      & \cmd{mathit}\marg*{\ldots}    &       \\
+		$\mathbf{ABCDE abcde 1234}$      & \cmd{mathbf}\marg*{\ldots}    &       \\
+		$\mathsf{ABCDE abcde 1234}$      & \cmd{mathsf}\marg*{\ldots}    &       \\
+		$\mathtt{ABCDE abcde 1234}$      & \cmd{mathtt}\marg*{\ldots}    &       \\
+		$\CMcal{ABCDE}$                  & \cmd{mathcal}\marg*{\ldots}   & 仅提供大写字母 \\
+		\hline
+		$\EuScript{ABCDE}$               & \cmd{mathcal}\marg*{\ldots}   & eucal 仅提供大写字母 \\
+		$\mathscr{ABCDE}$                & \cmd{mathscr}\marg*{\ldots}   & mathrsfs 仅提供大写字母\\
+		$\mathfrak{ABCDE abcde 1234}$    & \cmd{mathfrak}\marg*{\ldots}  & amssymb 或 eufrak  \\
+		$\mathbb{ABCDE}$                 & \cmd{mathbb}\marg*{\ldots}    & amssymb 仅提供大写字母 \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\subsection{数学符号的尺寸}
+数学符号按照符号排版的位置规定尺寸，从大到小包括行间公式尺寸、行内公式尺寸、上下标尺寸、次级上下标尺寸。
+除了字号有别之外，行间和行内公式尺寸下的巨算符也使用不一样的大小。\LaTeX{} 为每个数学尺寸指定了一个切换的命令，见表 \ref{tbl:math-size}。
+
+\begin{table}[htp]
+	\centering
+	\caption{数学符号尺寸}\label{tbl:math-size}
+	\begin{tabular}{lll}
+		\hline
+		\textbf{命令} & \textbf{尺寸} & \textbf{示例} \\
+		\hline
+		\cmd{displaystyle}      & 行间公式尺寸   & $\displaystyle\sum a $\\
+		\cmd{textstyle}         & 行内公式尺寸   & $\textstyle\sum a $ \\
+		\cmd{scriptstyle}       & 上下标尺寸     & $\scriptstyle a$ \\
+		\cmd{scriptscriptstyle} & 次级上下标尺寸 & $\scriptscriptstyle a$\\
+		\hline
+	\end{tabular}
+\end{table}
+我们通过以下示例对比行间公式和行内公式的区别。在分式中，分子分母默认为行内公式尺寸，示例中将分母切换到行间公式尺寸：
+\clearpage
+\begin{lstlisting}
+  \[
+    r = \frac
+    {\sum_{i=1}^n (x_i- x)(y_i- y)}
+    {\displaystyle \left[
+    \sum_{i=1}^n (x_i-x)^2
+    \sum_{i=1}^n (y_i-y)^2
+    \right]^{1/2} }
+  \]
+\end{lstlisting}
+\begin{center}
+	\fbox{
+		\parbox{20em}{
+			\[
+			r = \frac
+			{\sum_{i=1}^n (x_i- x)(y_i- y)}
+			{\displaystyle \left[
+				\sum_{i=1}^n (x_i-x)^2
+				\sum_{i=1}^n (y_i-y)^2
+				\right]^{1/2} }
+			\]
+		}
+	}
+\end{center}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

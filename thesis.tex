@@ -1,0 +1,116 @@
+\documentclass{nuist}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%%      定义个人信息，标题可以通过 <\\> 实现手动换行
+%% Params：
+%%      classification			中图分类号
+%%		secret					密级
+%%	    studentno				学号
+%%		degree				    学历
+%%		title					论文题目，\titlesep 命令分割两行
+%%      name				    申请人姓名
+%%		mentor				    指导老师 
+%%		mentorrank			    知道老师职称
+%%		major					学科名称
+%%      research				研究方向
+%%		institute				培养学院
+%%      year                    提交时间，年
+%%      month                   提交时间，月
+%%      day					    提交时间，日
+%%		keywordscn  			关键词(用 \keysepcn 命令分割,之前不要有空格)
+%%		keywordsen				keywords(split by \keysepen，no spaces before)
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\information{
+%	classification=TP399,     
+%	studentno=20191221024,       
+%	degree=硕士,          
+%	title=基于时空预测网络和卷积神经网络的 \titlesep 短临降水预测研究,         
+%	name=易雷,           
+%	mentor=田伟,     
+%	mentorrank=副教授,     
+%	major=软件工程,           
+%	research=深度学习与短临降雨预测,     
+%	institute=计算机与软件学院,       
+%	year=2021,           
+%	month=6,        
+%	day=10,           
+%	keywordscn=短临降雨预测\keysepcn RadarNet\keysepcn RainNet,     
+%	keywordsen=Nowcasting\keysepen RadarNet\keysepen RainNet
+%}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%%		\blind		表示用于盲审，用到时取消注释即可
+%%		\print		表示生成打印版本的PDF，取消注释即可
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\blind
+%\print
+\begin{document}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%
+	%%		此部分插入封面和声明，无需修改
+	%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	\includefrontmatter
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%
+	%%                   目   录
+	%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\content	
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%
+	%%                   摘   要
+	%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\include{chapters/abstract}
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%
+	%%  下面进入正文，根据实际情况添加删除章节
+	%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	\mainmatter
+	\include{chapters/chapter1}
+	\include{chapters/chapter2}
+	\include{chapters/chapter3}
+	\include{chapters/chapter4}
+	\include{chapters/chapter5}
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%
+	%%                    致  谢
+	%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	\include{chapters/thanks}
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%
+	%%		                      插入参考文献
+	%%  Params：
+	%%	  \bibliographystyle   参考文献样式类型，[gbt7714-2005, gbt7714-2015]
+	%%	  \bibliography        存储参考文献信息的bibtex的文件  
+	%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	\addreference
+	\bibliographystyle{gbt7714-2015}
+	\bibliography{reference}
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%
+	%%                    作者简介
+	%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	\include{chapters/resume}
+
+\end{document}

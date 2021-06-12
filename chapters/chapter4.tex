@@ -1,0 +1,100 @@
+\chapter{插入图片}
+\section{基本使用}
+\LaTeX{} 本身不支持插图功能，需要由 \pkg{graphicx} 宏包辅助支持。
+在调用了 \pkg{graphicx} 宏包以后，就可以使用 \cmd{include\-graphics} 命令加载图片了：
+\begin{lstlisting}
+	\includegraphics[<options>]{<filename>}
+\end{lstlisting}
+其中 \Arg{filename} 为图片文件名，与 \cmd{include} 命令的用法类似，文件名可能需要用相对路径或绝对路径表示。图片文件的扩展名一般可不写。另外一定要注意，\textbf{文件名里既不要有空格（类似 \cmd{include}），也不要有多余的英文点号}，否则宏包在解析文件名的过程中会出错。
+
+另外 \pkg{graphicx} 宏包还提供了 \cmd{graphics\-path} 命令，用于声明一个或多个图片文件存放的目录，
+使用这些目录里的图片时可不用写路径：
+\begin{lstlisting}
+  % 假设主要的图片放在 figures 子目录下，标志放在 logo 子目录下
+  \graphicspath{{figures/}{logo/}}
+\end{lstlisting}
+
+\cmd{includegraphics} 命令的可选参数 \Arg{options} 支持 \Arg{key}=\Arg{value} 形式赋值，常用的参数如下：
+\begin{table}[htp]
+	\centering
+	\caption{\cmd{includegraphics} 命令的可选参数}\label{tbl:graphics-options}
+	\begin{tabular}{lp{18em}}
+		\hline
+		\textbf{参数} & \textbf{含义} \\
+		\hline
+		\texttt{width=}\Arg{width}    &  将图片缩放到宽度为 \Arg{width} \\
+		\texttt{height=}\Arg{height}  &  将图片缩放到高度为 \Arg{height} \\
+		\texttt{scale=}\Arg{scale}    &  将图片相对于原尺寸缩放 \Arg{scale} 倍 \\
+		\texttt{angle=}\Arg{angle}    &  令图片逆时针旋转 \Arg{angle} 度 \\
+		\hline
+	\end{tabular}
+\end{table}
+\clearpage
+\section{排版多行多列图片}
+这里给个离职，模仿写就好：
+\begin{lstlisting}
+  \begin{figure}[htbp]
+    \centering
+    \includegraphics[width=...]{...}
+    \qquad
+    \includegraphics[width=...]{...} \\[..pt]
+    \includegraphics[width=...]{...}
+    \caption{...}
+    \label{...}
+  \end{figure}
+\end{lstlisting}
+\begin{figure}[htp]
+	\centering
+	\fcolorbox[gray]{0}{0.96}{\parbox{10em}{\vrule width 0pt height 10ex\hfil}}
+	\qquad
+	\fcolorbox[gray]{0}{0.96}{\parbox{10em}{\vrule width 0pt height 12ex\hfil}}
+	\par\bigskip
+	\fcolorbox[gray]{0}{0.96}{\parbox{20em}{\vrule width 0pt height 12ex\hfil}}
+	\caption{并排放置图片的示意。}\label{fig:parallel-fig}
+\end{figure}
+或者使用这种方式，个人比较喜欢下面这种：
+\clearpage
+\begin{lstlisting}
+  \begin{figure}[t]
+    \centering
+    \subfloat[图1]{
+      \label{fig1}
+      \includegraphics[width=0.5\textwidth]{图1}
+    }
+    \subfloat[图2]{
+      \label{fig2}
+      \includegraphics[width=0.5\textwidth]{图2}
+    }\\ 
+    \subfloat[图3]{
+      \label{fig3}
+      \includegraphics[width=0.5\textwidth]{图3}
+    } 
+    \subfloat[图4]{
+      \label{fig4}
+      \includegraphics[width=0.5\textwidth]{图4}
+    }
+    \caption{多行多列子图}
+    \label{fig}	
+  \end{figure}
+\end{lstlisting}
+\begin{figure}[H]
+	\centering
+	\subfloat[图1]{
+		\label{fig1}
+		\fcolorbox[gray]{0}{0.96}{\parbox{10em}{\vrule width 0pt height 10ex\hfil}}
+	}% 
+	\subfloat[图2]{
+		\label{fig2}
+		\fcolorbox[gray]{0}{0.96}{\parbox{10em}{\vrule width 0pt height 10ex\hfil}}
+	}\\ 
+	\subfloat[图3]{
+		\label{fig3}
+		\fcolorbox[gray]{0}{0.96}{\parbox{10em}{\vrule width 0pt height 10ex\hfil}}
+	} 
+	\subfloat[图4]{
+		\label{fig4}
+		\fcolorbox[gray]{0}{0.96}{\parbox{10em}{\vrule width 0pt height 10ex\hfil}}
+	}
+	\caption{多行多列子图}
+	\label{fig}	
+\end{figure}

@@ -1,0 +1,11 @@
+\chapter{参考文献}
+
+\section{参考文件格式}
+目前本模板仅有 ~{\color{blue}{GB/T~7714-2005}}~和~{\color{blue}{GB/T~7714-2015}}~样式，默认采用~{\color{blue}{GB/T~7714-2015}}~样式，如果需要使用其他格式，请自行寻找或编写 \emph{.bst}文件。
+
+\section{BibTeX 的使用}
+模板中有一个\emph{reference.bib}文件，是存放参考文献信息的数据库，通过谷歌学术、微软学术或是百度学术，查找文献时，把其 BibTeX 的引用信息复制到这个文件里，在你需要引用的地方，按照如下方式引用：
+\begin{lstlisting}[caption=BibTeX 引用参考文献]
+  \cite{bibid}  % bibid 就是你复制引文信息的第一个参数
+  \cite{bibid1,bibid2,bibid2}  % 同时引用多个文献
+\end{lstlisting}

@@ -1,0 +1,439 @@
+\chapter{插入表格}
+\LaTeX{} 里排版表格不如 Word 等所见即所得的工具简便和自由，不过对于不太复杂的表格来讲，完全能够胜任。
+
+排版表格最基本的 \env{tabular} 环境用法为：
+\begin{lstlisting}
+  \begin{tabular}[align]{column-spec}
+    <item1> & <item2> & ... \\
+    \hline
+    <item1> & <item2> & ... \\
+  \end{tabular}
+\end{lstlisting}
+其中 \Arg{column-spec} 是列格式标记，在接下来的内容将仔细介绍；\texttt\& 用来分隔单元格；
+\crcmd{} 用来换行；\cmd{hline} 用来在行与行之间绘制横线。
+
+
+直接使用 \env{tabular} 环境的话，会\textbf{和周围的文字混排}。此时可用一个可选参数 \Arg{align} 控制垂直对齐：
+\verb|t| 和 \verb|b| 分别表示按表格顶部、底部对齐，其他参数或省略不写（默认）表示居中对齐。
+\begin{lstlisting}
+  \begin{tabular}{|c|}
+  center-\\ aligned \\
+  \end{tabular},
+  
+  \begin{tabular}[t]{|c|}
+  top-\\ aligned \\
+  \end{tabular},
+  
+  \begin{tabular}[b]{|c|}
+  bottom-\\ aligned\\
+  \end{tabular} tabulars.
+\end{lstlisting}
+\begin{center}
+	\fbox{
+		\parbox{30em}{
+			\centering
+			\begin{tabular}{|c|}
+				center-\\ aligned \\
+			\end{tabular},
+			\begin{tabular}[t]{|c|}
+				top-\\ aligned \\
+			\end{tabular},
+			\begin{tabular}[b]{|c|}
+				bottom-\\ aligned\\
+			\end{tabular} tabulars.
+		}
+	}
+\end{center}
+
+但是通常情况下 \env{tabular} 环境很少与文字直接混排，而是会放在 \env{table} 浮动体环境中，并用 \cmd{caption} 命令加标题。
+
+\section{列格式}
+\env{tabular} 环境使用 \Arg{column-spec} 参数指定表格的列数以及每列的格式。
+\begin{table}[htp]
+	\centering
+	\caption{\LaTeX{} 表格列格式}
+	\begin{tabular}{*{2}{l}}
+		\hline
+		\textbf{列格式} & \textbf{说明} \\
+		\hline
+		\ttfamily l/c/r          & 单元格内容左对齐/居中/右对齐，不折行 \\
+		\ttfamily p\marg{width}  & 单元格宽度固定为 \Arg{width}，可自动折行 \\
+		\ttfamily |              & 绘制竖线 \\
+		\ttfamily @\marg{string} & 自定义内容 \Arg{string} \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\begin{lstlisting}
+  \begin{tabular}{lcr|p{6em}}
+    \hline
+    left & center & right
+    & par box with fixed width\\
+    L & C & R & P \\
+    \hline
+  \end{tabular}
+\end{lstlisting}
+\begin{center}
+	\fbox{
+		\parbox{20em}{
+			\centering
+			\begin{tabular}{lcr|p{6em}}
+				\hline
+				left & center & right
+				& par box with fixed width\\
+				L    & C      & R     & P \\
+				\hline
+			\end{tabular}
+		}
+	}
+\end{center}
+
+表格中每行的单元格数目不能多于列格式里 \texttt{l/c/r/p} 的总数（可以少于这个总数），否则出错。
+
+\texttt{@} 格式可在单元格前后插入任意的文本，但同时它也消除了单元格前后额外添加的间距。
+\texttt{@} 格式可以适当使用以充当“竖线”。特别地，\texttt{@}\marg*{} 可直接用来消除单元格前后的间距：
+\clearpage
+\begin{lstlisting}
+  \begin{tabular}{@{} r@{:}lr @{}}
+    \hline
+    1  & 1 & one \\
+    11 & 3 & eleven \\
+    \hline
+  \end{tabular}
+\end{lstlisting}
+\begin{center}
+	\fbox{
+		\parbox{20em}{
+			\centering
+			\begin{tabular}{@{} r@{:}lr @{}}
+				\hline
+				1  & 1 & one \\
+				11 & 3 & eleven \\
+				\hline
+			\end{tabular}
+		}
+	}
+\end{center}
+另外 \LaTeX{} 还提供了简便的将格式参数重复的写法 \texttt*\marg{n}\marg{column-spec}，比如以下两种写法是等效的：
+\begin{verbatim}
+\begin{tabular}{|c|c|c|c|c|p{4em}|p{4em}|}
+\begin{tabular}{|*{5}{c|}*{2}{p{4em}|}}
+\end{verbatim}
+有时需要为整列修饰格式，比如整列改变为粗体，如果每个单元格都加上 \cmd{bfseries} 命令会比较麻烦。
+\pkg{array} 宏包提供了辅助格式 \texttt> 和 \texttt<，用于给列格式前后加上修饰命令：
+
+\begin{lstlisting}
+  % \usepackage{array}
+  \begin{tabular}{>{\itshape}r<{*}l}
+    \hline
+    italic & normal \\
+    column & column \\
+    \hline
+  \end{tabular}
+\end{lstlisting}
+\begin{center}
+	\fbox{
+		\parbox{20em}{
+			\centering
+			\begin{tabular}{>{\itshape}r<{*}l}
+				\hline
+				italic & normal \\
+				column & column \\
+				\hline
+			\end{tabular}
+			
+		}
+	}
+\end{center}
+
+辅助格式甚至支持插入 \cmd{centering} 等命令改变 \texttt{p} 列格式的对齐方式，
+一般还要加额外的命令 \cmd{array\-back\-slash} 以免出错。
+
+
+\begin{lstlisting}
+  % \usepackage{array}
+  \begin{tabular}{>{\centering\arraybackslash}p{9em}}
+    \hline
+    Some center-aligned long text. \\
+    \hline
+  \end{tabular}
+\end{lstlisting}
+
+\begin{center}
+	\fbox{
+		\parbox{20em}{
+			\centering
+			\begin{tabular}{>{\centering\arraybackslash}p{9em}}
+				\hline
+				Some center-aligned long text. \\
+				\hline
+			\end{tabular}
+		}
+	}
+\end{center}
+
+\pkg{array} 宏包还提供了类似 \texttt{p} 格式的 \texttt{m} 格式和 \texttt{b} 格式，
+三者分别在垂直方向上靠顶端对齐、居中以及底端对齐。
+\begin{lstlisting}
+  % \usepackage{array}
+  \newcommand\txt{a b c d e f g h i}
+  \begin{tabular}{cp{2em}m{2em}b{2em}}
+    \hline
+    pos & \txt & \txt & \txt \\
+    \hline
+  \end{tabular}
+\end{lstlisting}
+\begin{center}
+	\fbox{
+		\parbox{20em}{
+			\centering
+			\newcommand\txt{a b c d e f g h i}
+			\begin{tabular}{cp{2em}m{2em}b{2em}}
+				\hline
+				pos & \txt & \txt & \txt \\
+				\hline
+			\end{tabular}
+		}
+	}
+\end{center}
+\clearpage
+\section{列宽}
+在控制列宽方面，\LaTeX{} 表格有着明显的不足：\texttt{l/c/r} 格式的列宽是由文字内容的自然宽度决定的，
+而 \texttt{p} 格式给定了列宽却不好控制对齐（可用 \pkg{array} 宏包的辅助格式），
+更何况列与列之间通常还有间距，所以直接生成给定总宽度的表格并不容易。
+
+\pkg{tabularx} 宏包为我们提供了方便的解决方案。它引入了一个 \texttt{X} 列格式，类似 \texttt{p} 列格式，
+不过会根据表格宽度自动计算列宽，多个 \texttt{X} 列格式平均分配列宽。
+\texttt{X} 列格式也可以用 \pkg{array} 里的辅助格式修饰对齐方式：
+\begin{lstlisting}
+  % \usepackage{array,tabularx}
+  \begin{tabularx}{14em}{|*{4}{>{\centering\arraybackslash}X|}}
+    \hline
+    A & B & C & D \\ \hline
+    a & b & c & d \\ \hline
+  \end{tabularx}
+\end{lstlisting}
+\begin{center}
+	\fbox{
+		\parbox{20em}{
+			\centering
+			\begin{tabularx}{14em}%
+				{|*{4}{>{\centering\arraybackslash}X|}}
+				\hline
+				A & B & C & D \\ \hline
+				a & b & c & d \\ \hline
+			\end{tabularx}
+		}
+	}
+\end{center}
+
+\section{横线}
+
+我们已经在之前的例子见过许多次绘制表格线的 \cmd{hline} 命令。另外 \cmd{cline}\marg*{\Arg{i}-\Arg{j}} 用来绘制跨越部分单元格的横线：
+\begin{lstlisting}
+  \begin{tabular}{|c|c|c|}
+    \hline
+    4 & 9 & 2 \\ \cline{2-3}
+    3 & 5 & 7 \\ \cline{1-1}
+    8 & 1 & 6 \\ \hline
+  \end{tabular}
+\end{lstlisting}
+
+\begin{center}
+	\fbox{
+		\parbox{20em}{
+			\centering
+			\begin{tabular}{|c|c|c|}
+				\hline
+				4 & 9 & 2 \\ \cline{2-3}
+				3 & 5 & 7 \\ \cline{1-1}
+				8 & 1 & 6 \\ \hline
+			\end{tabular}
+		}
+	}
+\end{center}
+
+在科技论文排版中广泛应用的表格形式是三线表，形式干净简明。
+三线表由 \pkg{booktabs} 宏包支持，它提供了 \cmd{toprule}、\cmd{midrule} 和 \cmd{bottomrule} 命令用以排版三线表的三条线，以及和 \cmd{cline} 对应的 \cmd{cmidrule}。除此之外，最好不要用其它横线以及竖线：
+\begin{lstlisting}
+  % \usepackage{booktabs}
+  \begin{tabular}{cccc}
+    \toprule
+    & \multicolumn{3}{c}{Numbers} \\
+    \cmidrule{2-4}
+    & 1 & 2 & 3 \\
+    \midrule
+    Alphabet & A & B & C \\
+    Roman    & I & II& III \\
+    \bottomrule
+  \end{tabular}
+\end{lstlisting}
+
+\begin{center}
+	\fbox{
+		\parbox{20em}{
+			\centering
+			\begin{tabular}{cccc}
+				\toprule
+				& \multicolumn{3}{c}{Numbers} \\
+				\cmidrule{2-4}
+				& 1 & 2 & 3 \\
+				\midrule
+				Alphabet & A & B & C \\
+				Roman    & I & II& III \\
+				\bottomrule
+			\end{tabular}
+		}
+	}
+\end{center}
+\section{合并单元格}
+\LaTeX{} 是一行一行排版表格的，横向合并单元格较为容易，由 \cmd{multi\-column} 命令实现：
+\begin{lstlisting}
+  \multicolumn{<n>}{<column-spec>}{<item>}
+\end{lstlisting}
+其中 \Arg{n} 为要合并的列数，\Arg{column-spec} 为合并单元格后的列格式，只允许出现一个 \texttt{l/c/r} 或 \texttt{p} 格式。
+如果合并前的单元格前后带表格线 \texttt|，合并后的列格式也要带 \texttt| 以使得表格的竖线一致。
+\begin{lstlisting}
+  \begin{tabular}{|c|c|c|}
+    \hline
+    1 & 2 & Center \\ \hline
+    \multicolumn{2}{|c|}{3} & \multicolumn{1}{r|}{Right} \\ 
+    \hline
+    4 & \multicolumn{2}{c|}{C} \\ 
+    \hline
+  \end{tabular}
+\end{lstlisting}
+\begin{center}
+	\fbox{
+		\parbox{20em}{
+			\centering
+			\begin{tabular}{|c|c|c|}
+				\hline
+				1 & 2 & Center \\ \hline
+				\multicolumn{2}{|c|}{3} &
+				\multicolumn{1}{r|}{Right} \\ \hline
+				4 & \multicolumn{2}{c|}{C} \\ \hline
+			\end{tabular}
+		}
+	}
+\end{center}
+
+上面的例子还体现了，形如 \cmd{multicolumn}\marg*{1}\marg{column-spec}\marg{item} 的命令{\bf 可以用来修改某一个单元格的列格式。}
+
+纵向合并单元格需要用到 \pkg{multirow} 宏包提供的 \cmd{multirow} 命令：
+\begin{lstlisting}
+	\multirow{<n>}{<width>}{<item>}
+\end{lstlisting}
+\Arg{width} 为合并后单元格的宽度，可以填 \texttt{*} 以使用自然宽度。
+
+我们看一个结合 \cmd{cline}、\cmd{multi\-column} 和 \cmd{multi\-row} 命令的例子：
+
+\begin{lstlisting}
+  % \usepackage{multirow}
+  \begin{tabular}{ccc}
+    \hline
+    \multirow{2}{*}{Item} & \multicolumn{2}{c}{Value} \\ \cline{2-3}
+    & First & Second  \\ \hline
+    A & 1 & 2 \\  \hline
+  \end{tabular}
+\end{lstlisting}
+\begin{center}
+	\fbox{
+		\parbox{20em}{
+			\centering
+			\begin{tabular}{ccc}
+				\hline
+				\multirow{2}{*}{Item} & \multicolumn{2}{c}{Value} \\
+				\cline{2-3}
+				& First & Second 
+				\\ \hline
+				A & 1     & 2 \\ 
+				\hline
+			\end{tabular}
+		}
+	}
+\end{center}
+
+
+\section{行距控制}
+\LaTeX{} 生成的表格看起来通常比较紧凑。修改参数 \cmd{array\-stretch} 可以得到行距更加宽松的表格：
+\begin{lstlisting}
+  \renewcommand\arraystretch{1.8}
+  \begin{tabular}{|c|}
+    \hline
+    Really loose \\ \hline
+    tabular rows.\\ \hline
+  \end{tabular}
+\end{lstlisting}
+\begin{center}
+	\fbox{
+		\parbox{20em}{
+			\centering
+			\renewcommand\arraystretch{1.8}
+			\begin{tabular}{|c|}
+				\hline
+				Really loose \\ \hline
+				tabular rows.\\ \hline
+			\end{tabular}
+		}
+	}
+\end{center}
+
+另一种增加间距的办法是给换行命令 \crcmd{} 添加可选参数，在这一行下面加额外的间距，适合用于在行间不加横线的表格：
+\begin{lstlisting}
+  \begin{tabular}{c}
+    \hline
+    Head lines \\[6pt]
+    tabular lines \\
+    tabular lines \\ \hline
+  \end{tabular}
+\end{lstlisting}
+\begin{center}
+	\fbox{
+		\parbox{20em}{
+			\centering
+			\begin{tabular}{c}
+				\hline
+				Head lines \\[6pt]
+				tabular lines \\
+				tabular lines \\ \hline
+			\end{tabular}
+		}
+	}
+\end{center}
+
+但是这种换行方式的存在导致了一个缺陷——{\bf{表格的首个单元格不能直接使用中括号 \text{[~]}}}，
+否则 \crcmd{} 往往会将下一行的中括号当作自己的可选参数，因而出错。如果要使用中括号，应当放在花括号 \marg*{} 里面。
+或者也可以选择将换行命令写成 \crcmd\texttt{[0pt]}。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

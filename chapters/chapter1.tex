@@ -1,0 +1,150 @@
+\chapter{基本使用}
+
+\section{定义信息}
+我们在开始排版之间，需要导言区定义一些个人的信息来填充封面，也就是在 \verb|\begin{document}| 之前，插入以下代码：
+\begin{lstlisting}[caption=个人信息定义]
+\information{
+  classification=中图分类号,     
+  studentno=学号,       
+  degree=学历,          
+  title=论文 \titlesep 题目,         
+  name=姓名,           
+  mentor=导师,     
+  mentorrank=导师职称,     
+  major=专业,           
+  research=研究方向,     
+  institute=学院,       
+  year=年,           
+  month=月,        
+  day=日,           
+  keywordscn=关键词1\keysepcn 关键词2\keysepcn 关键词3,     
+  keywordsen=KeyWord1\keysepen KeyWord2\keysepen KeyWord3
+}
+\end{lstlisting}
+这样，我们就初步完成了封面信息的填充，注意，\verb|\titlesep| 只能用于标题的换行，且只能用一次，一般标题长度足够了，\verb|\keysepcn| 和 \verb|\keysepen| 分别用于中英文关键词的分隔。
+
+\section{正文编写}
+如果排版时只在一个文件内，则修改时会十分不便，建议使用多文件排版，然后通过 \verb|\include{file}| 引入。正文和致谢的引入位置在参考文献之前，这点需要注意，正确的位置如下所示：
+\begin{lstlisting}[caption=正文引入]
+  % 正文开始
+  \mainmatter
+  
+  % 具体正文章节
+  \include{chapters/chapter1}
+  \include{chapters/chapter2}
+  \include{chapters/chapter3}
+  \include{chapters/chapter4}
+  \include{chapters/chapter5}
+  \include{chapters/chapter6}
+  \include{chapters/chapter7}
+  
+  % 致谢
+  \include{chapters/thanks}
+  
+  % 参考文献开始
+  \addreference
+\end{lstlisting}
+在正文内部，可以分四个层级，例如：
+\begin{lstlisting}[caption=章节命令使用]
+  \chapter{一级标题}
+  \section{二级标题}
+  \subsection{三级标题}
+  \subsubsection{四级标题}
+\end{lstlisting}
+\begin{figure}[H]
+  \centering 
+  \includegraphics[width=0.5 \linewidth]{figures/2-1}
+  \caption{标题格式}
+  \label{2:1}
+\end{figure}
+\section{常用命令}
+\subsection{分页}
+分页包裹连续分页和奇数页分页，分别对应命令 \verb|\clearpage| 和 \verb|\cleardoublepage|，其中，\verb|\clearpage| 在空白页不会显示页眉页脚
+\subsection{文本装饰}
+\begin{lstlisting}[caption=文本装饰]
+  \CJKunderdot{汉字，下加点} \\
+  \CJKunderline{汉字，下划线} \\
+  \CJKunderdblline{汉字，双下划线} \\
+  \CJKunderwave{汉字，下波浪线} \\
+  \CJKsout{汉字，删除线} \\
+  \CJKxout{汉字，删除线}
+\end{lstlisting}
+\begin{center}
+  \fbox{
+    \parbox{8em}{
+      \CJKunderdot{汉字，下加点} \\
+      \CJKunderline{汉字，下划线} \\
+      \CJKunderdblline{汉字，双下划线} \\
+      \CJKunderwave{汉字，下波浪线} \\
+      \CJKsout{汉字，删除线} \\
+      \CJKxout{汉字，删除线}
+    }
+  }
+\end{center}
+
+\subsection{列表环境}
+\LaTeX 提供了三种列表环境：编号的 enumerate 环境，不编号的 itemize 环境和使用关键字的 description 环境。在列表环境内部使用 \verb|\item| 命令开始一个列表项，他可以带一个可选参数表示手动编号或关键字。
+
+enumerate 环境使用数字自动编号：
+\clearpage
+\begin{lstlisting}[caption=enumerate环境]
+  \begin{enumerate}
+    \item 中文
+    \item English
+    \item 日本語
+  \end{enumerate}
+\end{lstlisting}
+
+\begin{center}
+  \fbox{
+    \parbox{8em}{
+      \begin{enumerate}
+        \item 中文
+        \item English
+        \item 日本語
+      \end{enumerate}
+    }
+  }
+\end{center}
+itemize 环境不编号，但会在每个条目前加一个符号以示标记：
+\begin{lstlisting}[caption=enumerate环境]
+  \begin{itemize}
+    \item 中文
+    \item English
+    \item 日本語
+  \end{itemize}
+\end{lstlisting}
+
+\begin{center}
+  \fbox{
+    \parbox{8em}{
+      \begin{itemize}
+        \item 中文
+        \item English
+        \item 日本語
+      \end{itemize}
+    }
+  }
+\end{center}
+description 环境总是使用 \verb|\item| 命令的可选参数，把它作为条目关键字加粗显示：
+\clearpage
+\begin{lstlisting}[caption=enumerate环境]
+    \begin{description}
+        \item[中文] 中国的语言文学 
+        \item[English] The language of England
+        \item[日本語] 日本の言語
+    \end{description}
+\end{lstlisting}
+
+\begin{center}
+  \fbox{
+    \parbox{14em}{
+      \begin{description}
+        \item[中文] 中国的语言文学 
+        \item[English] The language of England
+        \item[日本語] 日本の言語
+      \end{description}
+    }
+  }
+\end{center}
+这几个环境可以嵌套使用（至多四层），\LaTeX 会自动处理不同层次的缩进和编号。
